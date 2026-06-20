@@ -1,5 +1,6 @@
 import {
   BUTTON_COLORS,
+  FEATURES,
   PLACEMENTS,
   SCENARIOS,
   getButtonColor,
@@ -124,22 +125,33 @@ export function DesignPanel({ design, onChange }: DesignPanelProps) {
         </select>
       </div>
 
-      {/* 強制待機タイマー */}
+      {/* 追加の防御機能（ON/OFF トグル） */}
       <div>
-        <label className="flex cursor-pointer items-start gap-3 rounded-lg border border-slate-200 bg-white p-3 shadow-sm transition hover:border-slate-300">
-          <input
-            type="checkbox"
-            checked={design.forceWaitTimer}
-            onChange={(e) => onChange({ forceWaitTimer: e.target.checked })}
-            className="mt-0.5 h-4 w-4 accent-indigo-600"
-          />
-          <span>
-            <span className="block text-sm font-semibold text-slate-800">強制待機タイマー</span>
-            <span className="mt-0.5 block text-xs text-slate-500">
-              警告画面で5秒間ボタンを押せなくする
-            </span>
-          </span>
-        </label>
+        <span className={fieldLabel}>追加の防御機能（HCI対策）</span>
+        <p className="mt-0.5 text-xs text-slate-500">
+          有効にすると防御力は上がりますが、多くは利便性を犠牲にします（配点は「アルゴリズム解析」タブで確認できます）。
+        </p>
+        <div className="mt-2 space-y-2">
+          {FEATURES.map((f) => (
+            <label
+              key={f.key}
+              className="flex cursor-pointer items-start gap-3 rounded-lg border border-slate-200 bg-white p-3 shadow-sm transition hover:border-slate-300"
+            >
+              <input
+                type="checkbox"
+                checked={design[f.key]}
+                onChange={(e) =>
+                  onChange({ [f.key]: e.target.checked } as Partial<DesignState>)
+                }
+                className="mt-0.5 h-4 w-4 accent-indigo-600"
+              />
+              <span>
+                <span className="block text-sm font-semibold text-slate-800">{f.title}</span>
+                <span className="mt-0.5 block text-xs text-slate-500">{f.desc}</span>
+              </span>
+            </label>
+          ))}
+        </div>
       </div>
 
       {/* 学生の考察 */}

@@ -12,7 +12,8 @@ export function AlgorithmPanel() {
       <div>
         <h2 className="text-lg font-bold text-slate-900">評価アルゴリズムのソースコード</h2>
         <p className="mt-1 text-sm leading-relaxed text-slate-600">
-          下のコードは、左側で動いている<strong>スコア計算関数そのもの</strong>です（
+          下のコードは、右側のパネルでリアルタイムに動いている
+          <strong>スコア計算関数そのもの</strong>です（
           <code className="rounded bg-slate-100 px-1 py-0.5 text-[0.8em] text-slate-700">
             src/lib/scoring.ts
           </code>
@@ -51,6 +52,10 @@ export function AlgorithmPanel() {
             強制待機タイマーは防御力 +25 / 利便性 -40 です。この非対称な重み付けに根拠はありますか？
           </li>
           <li>防御力と利便性を独立に足し算するモデルは、両者の相互作用を見落としていませんか？</li>
+          <li>
+            防御機能をいくつも重ねると利便性は加算的に下がりますが、現実のユーザーの負担も
+            本当に単純な足し算で表せるのでしょうか（警告疲れ・学習効果は？）。
+          </li>
         </ul>
       </div>
     </div>

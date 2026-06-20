@@ -15,13 +15,30 @@ export type IgnorePlacement =
   | 'large-center' //       中央に大きく配置
   | 'checkbox-required' //   チェックボックスに同意しないと押せない
 
+/** ON/OFF で切り替える追加の防御機能のキー */
+export type FeatureKey =
+  | 'forceWaitTimer'
+  | 'confirmStep'
+  | 'requireReason'
+  | 'dangerEmphasis'
+  | 'safeDefaultFocus'
+
 /** 画面上で学生が設計する状態のすべて */
 export interface DesignState {
   scenario: ScenarioId
   warningText: string
   buttonColor: ButtonColor
   ignorePlacement: IgnorePlacement
+  /** 強制待機タイマー（5秒間ボタンを押せなくする） */
   forceWaitTimer: boolean
+  /** 二段階確認ダイアログ */
+  confirmStep: boolean
+  /** 操作理由の入力を必須化 */
+  requireReason: boolean
+  /** 危険の視覚的強調（赤バナー・警告アイコン） */
+  dangerEmphasis: boolean
+  /** 安全な選択肢を既定フォーカス/Enterに */
+  safeDefaultFocus: boolean
   reflection: string
 }
 

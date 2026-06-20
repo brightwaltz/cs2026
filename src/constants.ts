@@ -1,6 +1,7 @@
 import type {
   ButtonColor,
   DesignState,
+  FeatureKey,
   IgnorePlacement,
   ScenarioId,
 } from './types'
@@ -121,6 +122,54 @@ export const PLACEMENTS: readonly PlacementMeta[] = [
 ] as const
 
 // ---------------------------------------------------------------------------
+// 追加の防御機能（ON/OFF トグル）
+// 「強制待機タイマー」を含む、UI に並べる防御機能の一覧。
+// 配点そのものは src/lib/scoring.ts が唯一の真実（ここには数値を持たせない）。
+// ---------------------------------------------------------------------------
+export interface FeatureMeta {
+  key: FeatureKey
+  /** UI に表示するタイトル */
+  title: string
+  /** UI に表示する説明 */
+  desc: string
+  /** レポート出力用の短い名称 */
+  short: string
+}
+
+export const FEATURES: readonly FeatureMeta[] = [
+  {
+    key: 'forceWaitTimer',
+    title: '強制待機タイマー',
+    desc: '警告画面で5秒間ボタンを押せなくする',
+    short: 'タイマー',
+  },
+  {
+    key: 'confirmStep',
+    title: '二段階確認ダイアログ',
+    desc: '無視する前に「本当に実行しますか？」と再確認する',
+    short: '二段階確認',
+  },
+  {
+    key: 'requireReason',
+    title: '操作理由の入力を必須化',
+    desc: '無視する前に、続行する理由をテキストで入力させる',
+    short: '理由入力必須',
+  },
+  {
+    key: 'dangerEmphasis',
+    title: '危険の視覚的強調',
+    desc: '赤いバナーと警告アイコンで危険を目立たせる',
+    short: '危険の視覚強調',
+  },
+  {
+    key: 'safeDefaultFocus',
+    title: '安全な選択肢を既定に',
+    desc: '初期フォーカス／Enterキーを安全側ボタンに割り当てる',
+    short: '安全既定フォーカス',
+  },
+] as const
+
+// ---------------------------------------------------------------------------
 // ルックアップ用ヘルパー
 // ---------------------------------------------------------------------------
 export const getScenario = (id: ScenarioId): ScenarioMeta =>
@@ -141,5 +190,9 @@ export const DEFAULT_DESIGN: DesignState = {
   buttonColor: 'red',
   ignorePlacement: 'small-bottom-right',
   forceWaitTimer: false,
+  confirmStep: false,
+  requireReason: false,
+  dangerEmphasis: false,
+  safeDefaultFocus: false,
   reflection: '',
 }
