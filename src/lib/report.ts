@@ -52,7 +52,7 @@ export function buildReport(
 防御力スコア: ${defenseScore}/100
 利便性スコア: ${uxScore}/100
 
-[学生の考察（UIのトレードオフとアルゴリズムの妥当性について）]
+[考察（UIのトレードオフとアルゴリズムの妥当性について）]
 ${reflection}
 ====================`
 }

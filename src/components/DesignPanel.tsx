@@ -154,10 +154,10 @@ export function DesignPanel({ design, onChange }: DesignPanelProps) {
         </div>
       </div>
 
-      {/* 学生の考察 */}
+      {/* 考察 */}
       <div>
         <label htmlFor="reflection" className={fieldLabel}>
-          学生の考察
+          考察
         </label>
         <p className="mt-0.5 text-xs text-slate-500">
           UI設計のトレードオフと、内部アルゴリズム（計算式）の妥当性について記述してください。
