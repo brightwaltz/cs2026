@@ -2,6 +2,7 @@ import {
   BUTTON_COLORS,
   FEATURES,
   PLACEMENTS,
+  REFLECTION_PROMPTS,
   SCENARIOS,
   getButtonColor,
   getScenario,
@@ -154,23 +155,35 @@ export function DesignPanel({ design, onChange }: DesignPanelProps) {
         </div>
       </div>
 
-      {/* 考察 */}
+      {/* 考察（3項目に分割） */}
       <div>
-        <label htmlFor="reflection" className={fieldLabel}>
-          考察
-        </label>
+        <span className={fieldLabel}>考察</span>
         <p className="mt-0.5 text-xs text-slate-500">
-          UI設計のトレードオフと、内部アルゴリズム（計算式）の妥当性について記述してください。
+          以下の3つの観点に分けて記入してください。各欄のヒントと記入例を参考に、自分の言葉で書いてみましょう。
         </p>
-        <textarea
-          id="reflection"
-          rows={6}
-          className={textareaClass}
-          value={design.reflection}
-          placeholder="例：防御力を高めるために強制待機タイマーを採用したが、利便性スコアは大きく低下した。この配点モデルは…"
-          onChange={(e) => onChange({ reflection: e.target.value })}
-        />
-        <div className="mt-1 text-right text-xs text-slate-400">{design.reflection.length} 文字</div>
+        <div className="mt-3 space-y-5">
+          {REFLECTION_PROMPTS.map((p) => (
+            <div key={p.key} className="rounded-lg border border-slate-200 bg-slate-50/60 p-3">
+              <label htmlFor={p.key} className="block text-sm font-semibold text-slate-800">
+                {p.label}
+              </label>
+              <p className="mt-1 text-xs leading-relaxed text-slate-500">{p.hint}</p>
+              <textarea
+                id={p.key}
+                rows={4}
+                className={`${textareaClass} bg-white`}
+                value={design[p.key]}
+                placeholder={p.placeholder}
+                onChange={(e) =>
+                  onChange({ [p.key]: e.target.value } as Partial<DesignState>)
+                }
+              />
+              <div className="mt-1 text-right text-xs text-slate-400">
+                {design[p.key].length} 文字
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   )

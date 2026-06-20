@@ -1,5 +1,6 @@
 import {
   FEATURES,
+  REFLECTION_PROMPTS,
   getButtonColor,
   getPlacement,
   getScenario,
@@ -35,13 +36,18 @@ export function buildReport(
   const color = getButtonColor(design.buttonColor)
   const placement = getPlacement(design.ignorePlacement)
   const timer = design.forceWaitTimer ? 'あり' : 'なし'
-  const reflection = design.reflection.trim() || '（未記入）'
 
   // タイマー以外の追加防御機能のうち、有効なものを列挙
   const extras = FEATURES.filter(
     (f) => f.key !== 'forceWaitTimer' && design[f.key],
   ).map((f) => f.short)
   const extraLine = extras.length > 0 ? extras.join(', ') : 'なし'
+
+  // 考察を3つの観点ごとに整形する
+  const reflectionBlock = REFLECTION_PROMPTS.map((p) => {
+    const value = design[p.key].trim() || '（未記入）'
+    return `■ ${p.reportLabel}\n${value}`
+  }).join('\n\n')
 
   return `【HCIトレードオフ・シミュレーション結果】
 選択シナリオ: ${scenario.label}
@@ -52,7 +58,7 @@ export function buildReport(
 防御力スコア: ${defenseScore}/100
 利便性スコア: ${uxScore}/100
 
-[考察（UIのトレードオフとアルゴリズムの妥当性について）]
-${reflection}
+[考察]
+${reflectionBlock}
 ====================`
 }

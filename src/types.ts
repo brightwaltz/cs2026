@@ -23,6 +23,9 @@ export type FeatureKey =
   | 'dangerEmphasis'
   | 'safeDefaultFocus'
 
+/** 考察として記入する各項目のキー */
+export type ReflectionKey = 'reasonNote' | 'tradeoffNote' | 'algorithmNote'
+
 /** 画面上で学生が設計する状態のすべて */
 export interface DesignState {
   scenario: ScenarioId
@@ -39,7 +42,12 @@ export interface DesignState {
   dangerEmphasis: boolean
   /** 安全な選択肢を既定フォーカス/Enterに */
   safeDefaultFocus: boolean
-  reflection: string
+  /** 考察① このデザインにした理由 */
+  reasonNote: string
+  /** 考察② 防御力と利便性のトレードオフの方針 */
+  tradeoffNote: string
+  /** 考察③ 内部アルゴリズムについて思ったこと */
+  algorithmNote: string
 }
 
 /** 切り替え可能なタブ */

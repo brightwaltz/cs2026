@@ -3,6 +3,7 @@ import type {
   DesignState,
   FeatureKey,
   IgnorePlacement,
+  ReflectionKey,
   ScenarioId,
 } from './types'
 
@@ -170,6 +171,49 @@ export const FEATURES: readonly FeatureMeta[] = [
 ] as const
 
 // ---------------------------------------------------------------------------
+// 考察の記入項目
+// 「何を書けばよいか」を初心者にも明示するため、3つの観点に分割する。
+// ---------------------------------------------------------------------------
+export interface ReflectionPrompt {
+  key: ReflectionKey
+  /** 見出し */
+  label: string
+  /** 何を書けばよいかのガイド文 */
+  hint: string
+  /** 入力欄のプレースホルダ（書き出しの例） */
+  placeholder: string
+  /** レポート出力用の見出し */
+  reportLabel: string
+}
+
+export const REFLECTION_PROMPTS: readonly ReflectionPrompt[] = [
+  {
+    key: 'reasonNote',
+    label: '① このデザインにした理由',
+    hint: 'なぜその色・配置・防御機能を選んだのか、ねらいを書きましょう。「誰が・どんな場面で使うUIか」を想像すると書きやすくなります。',
+    placeholder:
+      '例：初心者が誤って危険な操作をしないよう、無視ボタンは赤色にして右下に小さく置いた。逆に安全な選択肢は…',
+    reportLabel: 'このデザインにした理由',
+  },
+  {
+    key: 'tradeoffNote',
+    label: '② 防御力と利便性のトレードオフの方針',
+    hint: '「安全性（防御力）」と「使いやすさ（利便性）」のどちらをどれだけ優先したか、その判断理由を書きましょう。両方を100点にはできない点に注目してください。',
+    placeholder:
+      '例：今回は安全性を優先し、多少使いにくくなっても強制待機タイマーを入れた。そのぶん利便性スコアは下がったが、その理由は…',
+    reportLabel: '防御力と利便性のトレードオフの方針',
+  },
+  {
+    key: 'algorithmNote',
+    label: '③ 内部アルゴリズム（計算式）について思ったこと',
+    hint: '「アルゴリズム解析」タブの計算式（配点）を見て、気づいたこと・疑問に思ったことを書きましょう。この配点は妥当だと思いますか？',
+    placeholder:
+      '例：緑が-20点で赤が+15点なのは妥当だと感じた。一方で、文字数だけで「読みやすさ」を測るのは乱暴ではないかと思った。なぜなら…',
+    reportLabel: '内部アルゴリズムについて思ったこと',
+  },
+] as const
+
+// ---------------------------------------------------------------------------
 // ルックアップ用ヘルパー
 // ---------------------------------------------------------------------------
 export const getScenario = (id: ScenarioId): ScenarioMeta =>
@@ -194,5 +238,7 @@ export const DEFAULT_DESIGN: DesignState = {
   requireReason: false,
   dangerEmphasis: false,
   safeDefaultFocus: false,
-  reflection: '',
+  reasonNote: '',
+  tradeoffNote: '',
+  algorithmNote: '',
 }
